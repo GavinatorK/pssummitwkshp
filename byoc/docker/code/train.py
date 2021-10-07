@@ -46,6 +46,7 @@ if __name__ == "__main__":
     # This is a way to pass additional arguments when running as a script
     # and use sagemaker-containers defaults to set their values when not specified.
     parser.add_argument("--train", type=str, default=os.environ["SM_CHANNEL_TRAIN"])
+    parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
 
     args = parser.parse_args()
 
