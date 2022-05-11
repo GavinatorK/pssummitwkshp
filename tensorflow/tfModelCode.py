@@ -85,7 +85,7 @@ def keras_model_fn(train_batches, val_batches, enable_bottleneck):
 
     model.fit(train_batches,
                         validation_data=val_batches,
-                        epochs=30,
+                        epochs=1,
                         callbacks=callbacks)
     return model
 
