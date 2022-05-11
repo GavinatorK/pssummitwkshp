@@ -29,7 +29,7 @@ def train(lr, train_channel):
     
 
     # Run training loop.
-    net.fit_one_cycle(5, 1e-03)
+    net.fit_one_cycle(1, 1e-03)
 
     # At the end of the training loop, we have to save model artifacts.
     model_dir = os.environ["SM_MODEL_DIR"]
