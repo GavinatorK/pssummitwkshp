@@ -33,7 +33,7 @@ def train(lr, train_channel):
 
     # At the end of the training loop, we have to save model artifacts.
     model_dir = os.environ["SM_MODEL_DIR"]
-    net.export(model_dir + "/export.pkl")
+    net.export(model_dir + "/model.pth")
 
 
 if __name__ == "__main__":
