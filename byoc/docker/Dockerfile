@@ -1,7 +1,7 @@
 # Part of the implementation of this container is based on the Amazon SageMaker Apache MXNet container.
 # https://github.com/aws/sagemaker-mxnet-container
 
-FROM fastdotai/fastai:latest
+FROM fastdotai/fastai:2021-02-11
 
 LABEL maintainer="Raj Kadiyala"
 
