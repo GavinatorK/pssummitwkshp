@@ -36,10 +36,6 @@ def input_fn(image_data, content_type='application/x-image'):
         if content_type == 'application/x-image':
             image_data = Image.open(io.BytesIO(image_data))
             image_data=  image_data.convert('RGB')
-    #         image_data = Image.open(requests.get(url, stream=True).raw)
-    # def input_fn(image_data):
-    #     logger.info('Deserializing the input data.')
-    #     image_data=image_data
 
             image_transform = transforms.Compose([
                 transforms.Resize(size=256),
@@ -63,22 +59,26 @@ def predict_fn(input_data, model):
     with torch.no_grad():
         model.eval()
         out = model(input_data)
-        ps = torch.exp(out)
-    return ps
+    return out
 
 def output_fn(prediction_output, accept='application/json'):
     logger.info('Serializing the generated output.')
-    classes = {0: 'Priority', 1: 'Roundabout', 2: 'Signal'}
-
-    topk, topclass = prediction_output.topk(1, dim=1)
+    class_names=['Priority', 'Roundabout', 'Signal']    
+    sm=nn.Softmax(dim=1)
+    pred_out=sm(prediction_output)
+    
     result = []
-
-    for i in range(1):
-        pred = {'prediction': classes[topclass.cpu().numpy()[0][i]], 'score': f'{topk.cpu().numpy()[0][i] * 100}%'}
-        logger.info(f'Adding prediction: {pred}')
-        result.append(pred)
+    
+    pred={class_names[i]:f'{pred_out.cpu().numpy()[0][i]}' for i in range(len(class_names))}
+    logger.info(f'Adding prediction: {pred}')
+    result.append(pred)
 
     if accept == 'application/json':
         return json.dumps(result), accept
     raise Exception(f'Requested unsupported ContentType in Accept: {accept}')
+
+
+
+
+
 
